@@ -1,0 +1,51 @@
+---
+import { getCollection } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import Main from "@/components/Main.astro";
+import Footer from "@/components/Footer.astro";
+import { getSortedPosts } from "@/utils/getSortedPosts";
+import { useTranslations } from "@/i18n";
+import config from "@/config";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const t = useTranslations(locale);
+
+const entries = await getCollection("portfolio");
+const items = getSortedPosts(entries);
+---
+
+<Layout title={`${t.pages.portfolioTitle} | ${config.site.title}`}>
+  <Header />
+
+  <Breadcrumb />
+
+  <Main pageTitle={t.pages.portfolioTitle} pageDesc={t.pages.portfolioDesc}>
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      {
+        items.map(({ id, data }) => (
+          <a
+            href={getRelativeLocaleUrl(locale, `portfolio/${id}`)}
+            class="border-border hover:border-accent flex flex-col gap-3 border p-5 transition-colors"
+          >
+            <h2 class="font-heading text-accent text-xl font-semibold">
+              {data.title}
+            </h2>
+            <p class="text-sm">{data.description}</p>
+            {data.tags.length > 0 && (
+              <ul class="mt-auto flex flex-wrap gap-2 pt-2">
+                {data.tags.map(tag => (
+                  <li class="border-border px-2 py-0.5 text-xs">{tag}</li>
+                ))}
+              </ul>
+            )}
+          </a>
+        ))
+      }
+    </div>
+  </Main>
+
+  <Footer />
+</Layout>

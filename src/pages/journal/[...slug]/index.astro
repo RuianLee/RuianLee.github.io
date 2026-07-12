@@ -1,0 +1,51 @@
+---
+import { getCollection, render } from "astro:content";
+import PostLayout from "@/layouts/PostLayout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Datetime from "@/components/Datetime.astro";
+import BackButton from "@/components/BackButton.astro";
+import config from "@/config";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("journal", ({ data }) => !data.draft);
+  return entries.map(entry => ({
+    params: { slug: entry.id },
+    props: entry,
+  }));
+}
+
+const entry = Astro.props;
+const { title, description, pubDatetime, modDatetime } = entry.data;
+const { Content } = await render(entry);
+---
+
+<PostLayout
+  title={`${title} | ${config.site.title}`}
+  description={description}
+  pubDatetime={pubDatetime}
+  modDatetime={modDatetime}
+>
+  <Header />
+
+  <BackButton />
+
+  <main
+    id="main-content"
+    class:list={["app-layout", { "mt-8": !config.features.showBackButton }]}
+    data-pagefind-body
+  >
+    <h1 class="text-accent font-heading inline-block text-2xl font-bold sm:text-3xl">
+      {title}
+    </h1>
+
+    <div class="my-2">
+      <Datetime {pubDatetime} {modDatetime} size="lg" />
+    </div>
+
+    <article class="app-prose max-w-app mt-8 w-full">
+      <Content />
+    </article>
+  </main>
+  <Footer />
+</PostLayout>

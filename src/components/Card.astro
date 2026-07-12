@@ -1,0 +1,51 @@
+---
+import { toTransitionName } from "@/utils/toTransitionName";
+import Datetime from "./Datetime.astro";
+
+type Props = {
+  variant?: "h2" | "h3";
+  href: string;
+  title: string;
+  description: string;
+  pubDatetime: Date;
+  modDatetime?: Date | null;
+  timezone?: string;
+  /** Optional badge line rendered above the description, e.g. 書名／作者 */
+  meta?: string;
+};
+
+const {
+  variant: Heading = "h2",
+  href,
+  title,
+  description,
+  pubDatetime,
+  modDatetime,
+  timezone,
+  meta,
+} = Astro.props;
+---
+
+<li class="my-6">
+  <a
+    href={href}
+    class:list={[
+      "text-accent inline-block text-lg font-medium",
+      "decoration-dashed underline-offset-4 hover:underline",
+      "focus-visible:no-underline focus-visible:underline-offset-0",
+    ]}
+  >
+    <Heading transition:name={toTransitionName(title)}>
+      {title}
+    </Heading>
+  </a>
+  <Datetime {pubDatetime} {modDatetime} {timezone} />
+  {
+    meta && (
+      <span class="border-accent text-accent mt-1 mb-1 inline-block border px-2 py-0.5 text-sm">
+        {meta}
+      </span>
+    )
+  }
+  <p>{description}</p>
+</li>
