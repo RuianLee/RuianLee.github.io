@@ -30,8 +30,8 @@ const {
   <a
     href={href}
     class:list={[
-      "text-accent inline-block text-lg font-medium",
-      "decoration-dashed underline-offset-4 hover:underline",
+      "inline-block text-lg font-bold",
+      "underline-offset-4 hover:underline",
       "focus-visible:no-underline focus-visible:underline-offset-0",
     ]}
   >
@@ -42,7 +42,7 @@ const {
   <Datetime {pubDatetime} {modDatetime} {timezone} />
   {
     meta && (
-      <span class="border-accent text-accent mt-1 mb-1 inline-block border px-2 py-0.5 text-sm">
+      <span class="border-accent text-accent mt-1 mb-1 inline-block rounded-full border px-2.5 py-0.5 text-sm">
         {meta}
       </span>
     )

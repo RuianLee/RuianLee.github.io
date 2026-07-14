@@ -8,7 +8,6 @@
 @layer base {
   * {
     @apply border-border outline-accent/75;
-    border-style: dashed;
     scrollbar-width: auto;
     scrollbar-color: var(--color-muted) transparent;
   }
@@ -21,8 +20,8 @@
     cursor: pointer;
   }
   body {
-    line-height: 1.9;
-    letter-spacing: 0.02em;
+    line-height: 1.7;
+    letter-spacing: 0;
   }
   h1,
   h2,
@@ -31,27 +30,45 @@
   h5,
   h6 {
     font-family: var(--font-heading);
-    line-height: 1.5;
-    letter-spacing: 0.04em;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
   }
 }
 
 @utility max-w-app {
-  @apply max-w-3xl;
+  @apply max-w-4xl;
 }
 
 @utility app-layout {
   @apply max-w-app mx-auto w-full px-4;
 }
 
-@utility active-nav {
-  @apply underline decoration-wavy decoration-2 underline-offset-8;
+/* Header 用比內文更寬的容器，讓導覽列延伸得更開闊 */
+@utility header-layout {
+  @apply mx-auto w-full max-w-6xl px-4;
 }
 
-/* 印章風格方框——用於首頁分類網格圖示 */
-@utility stamp-box {
-  @apply border-accent text-accent flex items-center justify-center border-2;
-  border-style: dashed;
+@utility active-nav {
+  @apply bg-muted rounded-md;
+}
+
+/* 卡片——用於作品集/首頁最新文章/分類等區塊 */
+@utility card-box {
+  @apply border-border hover:border-accent/50 rounded-2xl border p-6 transition-all hover:shadow-sm;
+}
+
+/*
+ * 沒有真實照片時的暖色調漸層佔位圖——取代單色灰塊，
+ * 用在首頁輪播背景、分類卡片、文章縮圖、頭像等處。
+ * 之後有真實照片可直接換成 <img>，不用動版面。
+ */
+@utility media-placeholder {
+  background-image: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--accent) 14%, var(--muted)),
+    color-mix(in oklab, var(--accent) 32%, var(--background))
+  );
 }
 
 :target {

@@ -7,6 +7,7 @@ export default {
     portfolio: "作品集",
     journal: "隨筆",
     faith: "靈修分享",
+    morningRevival: "晨興生活",
     about: "關於",
     search: "搜尋",
   },
@@ -23,25 +24,21 @@ export default {
     nextPost: "下一篇",
   },
   pagination: {
-    prev: "上一頁",
+    prev: "上一頁", 
     next: "下一頁",
     page: "第",
   },
   home: {
     socialLinks: "社群連結",
     intro:
-      "這裡收著一些作品、文字與思考的痕跡——關於軟體、關於生活，也關於信仰。歡迎慢慢翻閱。",
-    featured: "精選",
+      "晨興、禱告、申言、開發、教學——把一些作品、文字思考、享受基督的痕跡放上來——關於軟體、關於生活，也關於信仰。歡迎慢慢翻閱。",
     recentPosts: "最新文章",
     allPosts: "所有文章",
-    categoryPortfolio: "詩",
     categoryPortfolioDesc: "作品集",
-    categoryBlog: "記",
     categoryBlogDesc: "文集",
-    categoryJournal: "思",
     categoryJournalDesc: "隨筆",
-    categoryFaith: "靈",
     categoryFaithDesc: "靈修分享",
+    categoryMorningRevivalDesc: "晨興生活",
   },
   footer: {
     copyright: "版權所有",
@@ -59,6 +56,9 @@ export default {
 
     faithTitle: "靈修分享",
     faithDesc: "屬靈書報與讀書心得分享。",
+
+    morningRevivalTitle: "晨興生活",
+    morningRevivalDesc: "晨興聖言的享受與記錄。",
 
     searchTitle: "搜尋",
     searchDesc: "搜尋任何文章……",

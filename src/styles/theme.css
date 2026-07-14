@@ -8,28 +8,29 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
   --font-app: var(--font-sans);
-  --font-heading: var(--font-serif);
+  --font-heading: var(--font-heading-latin), var(--font-cjk);
+  --font-sans: var(--font-body-latin), var(--font-cjk);
 }
 
-/* Light theme values — 宣紙米白 + 墨色 + 朱紅印章 */
+/* Light theme values — 暖調 neutral（米杏/奶茶色） */
 :root,
 [data-theme="light"] {
-  --background: #f7f3e9;
-  --foreground: #2b2620;
-  --accent: #8b3a3a;
-  --accent-foreground: #f7f3e9;
-  --muted: #ece4d3;
-  --muted-foreground: #6f6559;
-  --border: #c9bfa8;
+  --background: #faf6f0;
+  --foreground: #3d362c;
+  --accent: #7c6650;
+  --accent-foreground: #faf6f0;
+  --muted: #efe4d5;
+  --muted-foreground: #8a7a68;
+  --border: #e2d5c2;
 }
 
-/* Dark theme values — 深墨底 + 米白字 */
+/* Dark theme values */
 [data-theme="dark"] {
-  --background: #211d18;
-  --foreground: #f2ece0;
-  --accent: #d18686;
-  --accent-foreground: #211d18;
-  --muted: #322c24;
-  --muted-foreground: #b8ac98;
-  --border: #4a4137;
+  --background: #201b15;
+  --foreground: #ece2d3;
+  --accent: #cbb69c;
+  --accent-foreground: #201b15;
+  --muted: #332b21;
+  --muted-foreground: #ab9a86;
+  --border: #4a3f31;
 }

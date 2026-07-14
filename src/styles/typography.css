@@ -13,10 +13,6 @@
       @apply text-foreground mb-3;
     }
 
-    h3 {
-      @apply italic;
-    }
-
     p,
     strong,
     ol,
@@ -32,7 +28,7 @@
     }
 
     a {
-      @apply text-foreground hover:text-accent wrap-break-word decoration-dashed underline-offset-4 focus-visible:no-underline;
+      @apply text-foreground hover:text-accent wrap-break-word underline-offset-4 focus-visible:no-underline;
     }
 
     ul {

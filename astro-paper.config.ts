@@ -3,7 +3,7 @@ import { defineAstroPaperConfig } from "./src/types/config";
 export default defineAstroPaperConfig({
   site: {
     url: "https://RuianLee.github.io/",
-    title: "紙頁書房",
+    title: "Ruian's Life",
     description: "作品集、文集、隨筆與靈修分享——一個安靜記錄生活與思考的角落。",
     author: "RuianLee",
     profile: "https://github.com/RuianLee",

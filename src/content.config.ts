@@ -67,6 +67,20 @@ const faith = defineCollection({
   }),
 });
 
+const morningRevivalLife = defineCollection({
+  loader: glob({
+    pattern: "**/[^_]*.{md,mdx}",
+    base: "./src/content/morning-revival",
+  }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDatetime: z.date(),
+    modDatetime: z.date().optional().nullable(),
+    draft: z.boolean().optional(),
+  }),
+});
+
 const pages = defineCollection({
   loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/pages" }),
   schema: z.object({
@@ -77,4 +91,11 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { blog, portfolio, journal, faith, pages };
+export const collections = {
+  blog,
+  portfolio,
+  journal,
+  faith,
+  "morning-revival": morningRevivalLife,
+  pages,
+};

@@ -7,6 +7,7 @@ export default {
     portfolio: "Portfolio",
     journal: "Journal",
     faith: "Faith",
+    morningRevival: "Morning Revival",
     about: "About",
     search: "Search",
   },
@@ -31,17 +32,13 @@ export default {
     socialLinks: "Social Links",
     intro:
       "A quiet corner for work, writing, and reflection — on software, life, and faith.",
-    featured: "Featured",
     recentPosts: "Recent Posts",
     allPosts: "All Posts",
-    categoryPortfolio: "詩",
     categoryPortfolioDesc: "Portfolio",
-    categoryBlog: "記",
     categoryBlogDesc: "Blog",
-    categoryJournal: "思",
     categoryJournalDesc: "Journal",
-    categoryFaith: "靈",
     categoryFaithDesc: "Faith",
+    categoryMorningRevivalDesc: "Morning Revival",
   },
   footer: {
     copyright: "Copyright",
@@ -59,6 +56,9 @@ export default {
 
     faithTitle: "Faith",
     faithDesc: "Spiritual reading and reflections.",
+
+    morningRevivalTitle: "Morning Revival",
+    morningRevivalDesc: "Enjoyment and notes from the morning revival of the Word.",
 
     searchTitle: "Search",
     searchDesc: "Search any article ...",

@@ -5,6 +5,7 @@ export interface UIStrings {
     portfolio: string;
     journal: string;
     faith: string;
+    morningRevival: string;
     about: string;
     search: string;
   };
@@ -28,17 +29,13 @@ export interface UIStrings {
   home: {
     socialLinks: string;
     intro: string;
-    featured: string;
     recentPosts: string;
     allPosts: string;
-    categoryPortfolio: string;
     categoryPortfolioDesc: string;
-    categoryBlog: string;
     categoryBlogDesc: string;
-    categoryJournal: string;
     categoryJournalDesc: string;
-    categoryFaith: string;
     categoryFaithDesc: string;
+    categoryMorningRevivalDesc: string;
   };
   footer: {
     copyright: string;
@@ -56,6 +53,9 @@ export interface UIStrings {
 
     faithTitle: string;
     faithDesc: string;
+
+    morningRevivalTitle: string;
+    morningRevivalDesc: string;
 
     searchTitle: string;
     searchDesc: string;

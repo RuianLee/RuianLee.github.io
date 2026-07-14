@@ -1,0 +1,108 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import PostLayout from "@/layouts/PostLayout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Datetime from "@/components/Datetime.astro";
+import BackButton from "@/components/BackButton.astro";
+import { genericCategories, type CategoryDef } from "@/config/categories";
+import config from "@/config";
+
+/** Fields any generic category entry might carry, across collection schemas. */
+type GenericData = {
+  title: string;
+  description: string;
+  pubDatetime: Date;
+  modDatetime?: Date | null;
+  tags?: string[];
+  url?: string;
+  bookTitle?: string;
+  bookAuthor?: string;
+};
+
+type GenericEntry = CollectionEntry<CategoryDef["slug"]>;
+
+export async function getStaticPaths() {
+  const paths = await Promise.all(
+    genericCategories.map(async category => {
+      const entries = await getCollection(category.slug, ({ data }) => !data.draft);
+      return entries.map(entry => ({
+        params: { category: category.slug, slug: entry.id },
+        props: { category, entry },
+      }));
+    })
+  );
+  return paths.flat();
+}
+
+const { category, entry } = Astro.props as { category: CategoryDef; entry: GenericEntry };
+const data = entry.data as GenericData;
+const { title, description, pubDatetime, modDatetime, tags, url, bookTitle, bookAuthor } = data;
+const { Content } = await render(entry);
+---
+
+<PostLayout
+  title={`${title} | ${config.site.title}`}
+  description={description}
+  pubDatetime={pubDatetime}
+  modDatetime={modDatetime}
+>
+  <Header />
+
+  <BackButton />
+
+  <main
+    id="main-content"
+    class:list={["app-layout", { "mt-8": !config.features.showBackButton }]}
+    data-pagefind-body
+  >
+    <h1
+      class:list={[
+        "inline-block text-2xl font-bold sm:text-3xl",
+        { "text-accent font-heading": category.layout === "list" },
+      ]}
+    >
+      {title}
+    </h1>
+
+    <div class="my-2 flex flex-wrap items-center gap-2">
+      <Datetime {pubDatetime} {modDatetime} size="lg" />
+      {
+        url && (
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline-offset-4 hover:underline"
+          >
+            前往連結 →
+          </a>
+        )
+      }
+      {
+        bookTitle && bookAuthor && (
+          <span class="border-accent text-accent rounded-full border px-2.5 py-0.5 text-sm">
+            《{bookTitle}》－{bookAuthor}
+          </span>
+        )
+      }
+    </div>
+
+    {
+      tags && tags.length > 0 && (
+        <ul class="my-4 flex flex-wrap gap-2">
+          {tags.map(tag => (
+            <li class="bg-muted text-muted-foreground rounded-full px-2.5 py-0.5 text-sm">
+              {tag}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    <article class="app-prose max-w-app mt-8 w-full">
+      <Content />
+    </article>
+  </main>
+  <Footer />
+</PostLayout>
