@@ -142,13 +142,13 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   {
     tags.length > 0 && (
       <div class="glass-panel rounded-xl p-6">
-        <h2 class="font-bold">標籤</h2>
+        <h2 class="font-bold text-xl">標籤</h2>
         <ul class="border-muted-foreground/40 mt-3 flex flex-wrap gap-2 border-t border-dashed pt-3">
           {tags.map(tag => (
             <li>
               <a
                 href={getRelativeLocaleUrl(locale, `tags/${tag}`)}
-                class="bg-background hover:text-accent block rounded-full px-2.5 py-0.5 text-xs transition-colors"
+                class="bg-background hover:text-accent block rounded-full px-3 py-1 text-sm transition-colors"
               >
                 {tag}
               </a>

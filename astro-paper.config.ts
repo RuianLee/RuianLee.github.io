@@ -12,7 +12,7 @@ export default defineAstroPaperConfig({
    * 包含網站標題、URL、描述、作者信息、語言設置等
    */
   site: {
-    title: "Not work for God, but worked by God.", // 部落格標題
+    title: "Ruian's Blog", // 部落格標題
     avatar: "/avatar.jpg", // 頭像圖片文件名
     url: "https://RuianLee.github.io/",
     description: "作品集、文集、隨筆與靈修分享——一個安靜記錄生活與思考的角落。",

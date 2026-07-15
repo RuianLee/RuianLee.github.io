@@ -16,7 +16,7 @@
 /* Light theme values — 明亮 neutral（近白，帶一點點暖調） */
 :root,
 [data-theme="light"] {
-  --background: #faf8f3;
+  --background: #f8f7edc2;
   --foreground: #292524;
   --accent: #7c6650;
   --accent-foreground: #fdfdfc;
