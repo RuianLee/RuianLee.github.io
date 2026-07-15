@@ -36,9 +36,6 @@ const sidebarTags = [...new Set(allItems.flatMap(item => item.tags))];
       <Sidebar locale={locale} categories={sidebarCategories} tags={sidebarTags} />
 
       <section id="latest-post">
-        <h2 class="border-muted-foreground/40 border-b border-dashed pb-3 text-xl font-bold">
-          {tag}
-        </h2>
         <ul>
           {
             items.map(({ title, description, pubDatetime, href, coverImage }) => (
