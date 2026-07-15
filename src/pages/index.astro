@@ -49,9 +49,9 @@ const tags = [...new Set(allItems.flatMap(item => item.tags))];
       <Sidebar locale={locale} categories={categories} tags={tags} />
 
       <section id="latest-post">
-        <h2 class="border-muted-foreground/40 border-b border-dashed pb-3 text-xl font-bold">
+        <!-- <h2 class="border-muted-foreground/40 border-b border-dashed pb-3 text-xl font-bold">
           最新文章
-        </h2>
+        </h2> -->
         <ul>
           { 
             allItems.map(({ title, description, pubDatetime, href, coverImage }) => (

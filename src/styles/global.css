@@ -20,8 +20,26 @@
     cursor: pointer;
   }
   body {
+    position: relative;
     line-height: 1.7;
     letter-spacing: 0;
+  }
+  /*
+   * 紙感顆粒——雜訊圖案本身定義在 src/assets/paper-grain.svg（一般 SVG 檔案，
+   * 屬性可以直接改，不用處理 URL 編碼）。用獨立的 ::before 疊一層而不是直接設在
+   * body 上，是因為「明不明顯」要用 opacity 控制，而 opacity 是整個元素（含所有
+   * 子元素、文字）一起套用的——直接設在 body 上會連內容一起變透明。
+   * 明顯度只調 theme.css 的 --paper-grain-opacity 這一個數字就好。
+   */
+  body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: url("../assets/paper-grain.svg");
+    background-size: 300px 300px;
+    opacity: var(--paper-grain-opacity);
+    pointer-events: none;
   }
   h1,
   h2,
@@ -41,12 +59,12 @@
 }
 
 @utility app-layout {
-  @apply mx-auto w-full max-w-6xl px-4;
+  @apply mx-auto w-full max-w-7xl px-4;
 }
 
 /* Header 用比內文更寬的容器，讓導覽列延伸得更開闊 */
 @utility header-layout {
-  @apply mx-auto w-full max-w-6xl px-4;
+  @apply mx-auto w-full max-w-7xl px-4;
 }
 
 @utility active-nav {
@@ -56,6 +74,50 @@
 /* 卡片——用於作品集/首頁最新文章/分類等區塊 */
 @utility card-box {
   @apply border-border hover:border-accent/50 rounded-2xl border p-6 transition-all hover:shadow-sm;
+}
+
+/*
+ * 玻璃感面板——低不透明度背景 + backdrop-filter 模糊/飽和度，做出霧面玻璃質感；
+ * 底色用 --muted（比 --background 略深的暖米色）而非 --background，
+ * 讓卡片跟頁面背景之間有一層自然的深淺區隔，不用額外加框線來分隔。
+ * 邊角統一圓角（由各元件自帶 rounded-xl／rounded-2xl 決定），
+ * 外緣統一極細、低對比的實色框，取代先前的虛線，避免跟輪播卡片（原本無框）混用兩種語言。
+ * 不支援 backdrop-filter 的瀏覽器 fallback 成較不透明的實色卡片，維持可讀性。
+ */
+@utility glass-panel {
+  position: relative;
+  background: color-mix(in oklab, var(--muted) 85%, transparent);
+  border: 0.5px solid color-mix(in oklab, var(--muted-foreground) 30%, transparent);
+  box-shadow:
+    inset 0 1px 1px color-mix(in oklab, white 70%, transparent),
+    0 20px 40px -22px color-mix(in oklab, var(--foreground) 30%, transparent);
+
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    background: color-mix(in oklab, var(--muted) 65%, transparent);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+  }
+}
+
+/*
+ * 實色面板——跟 glass-panel 用途相同（區塊容器），但不用 backdrop-filter 模糊，
+ * 改用不透明背景，讓文字對比更清楚，用於頁面標題這種需要清楚可讀的區塊。
+ */
+@utility solid-panel {
+  position: relative;
+  background: var(--background);
+  border: 1.5px dashed color-mix(in oklab, var(--muted-foreground) 45%, transparent);
+}
+
+/*
+ * 滿版延伸——讓子元素的背景／上下框線突破外層 max-width 容器，
+ * 延伸到視窗左右兩側，內容仍可用 app-layout 之類的容器置中。
+ */
+@utility full-bleed {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
 }
 
 /*
@@ -73,4 +135,49 @@
 
 :target {
   scroll-margin-block: 1rem;
+}
+
+/* 相片縮圖的柔和陰影——用於文章封面圖、側欄縮圖等，讓圖片有浮起的深度感 */
+@utility photo-shadow {
+  box-shadow:
+    0 16px 32px -14px color-mix(in oklab, var(--foreground) 45%, transparent),
+    0 4px 10px -6px color-mix(in oklab, var(--foreground) 25%, transparent);
+}
+
+/* 頭貼用的不規則「水滴」造型，取代單純的圓形 */
+@utility avatar-blob {
+  border-radius: 62% 38% 47% 53% / 45% 41% 59% 55%;
+  overflow: hidden;
+}
+
+/*
+ * 頭貼的玻璃質感——柔和陰影、亮邊、以及一道斜向高光，
+ * 疊在頭貼圖片上營造出磨砂玻璃的反光感。
+ * 需與 avatar-blob 疊加在同一個元素上，讓 ::after 的 border-radius: inherit 抓到水滴造型。
+ */
+@utility avatar-glass {
+  position: relative;
+  isolation: isolate;
+  box-shadow:
+    inset 0 1px 1px color-mix(in oklab, white 55%, transparent),
+    0 1px 0 color-mix(in oklab, white 25%, transparent),
+    0 16px 32px -12px color-mix(in oklab, var(--foreground) 60%, transparent),
+    0 6px 12px -6px color-mix(in oklab, var(--foreground) 35%, transparent);
+  border: 1px solid color-mix(in oklab, white 35%, transparent);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklab, white 60%, transparent) 0%,
+      transparent 38%,
+      transparent 62%,
+      color-mix(in oklab, white 25%, transparent) 100%
+    );
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
 }

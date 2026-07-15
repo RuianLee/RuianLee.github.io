@@ -28,7 +28,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
 
 {
   slides.length > 0 && (
-    <section id="hero-carousel" class="relative mt-8 overflow-hidden">
+    <section id="hero-carousel" class="full-bleed mt-8 overflow-hidden">
       {slides.map(({ title, description, pubDatetime, href, coverImage }, i) => (
         <div
           data-slide
@@ -45,7 +45,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
             <div class="media-placeholder absolute inset-0" />
           )}
           <div class="relative p-10 sm:p-24">
-            <div class="bg-background mx-auto max-w-2xl p-8 text-center shadow-sm sm:p-12">
+            <div class="glass-panel mx-auto max-w-2xl rounded-xl p-8 text-center sm:p-12">
               <p class="text-muted-foreground text-sm tracking-wide uppercase">
                 {dateFormatter.format(pubDatetime)}
               </p>

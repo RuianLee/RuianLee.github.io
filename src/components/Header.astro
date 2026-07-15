@@ -47,145 +47,158 @@ const sections = categories.map(({ slug, navLabel }) => ({
 </a>
 
 <header class="header-layout">
-  <!-- 頂部工具列：關於連結 + 社群圖示 + 深色模式切換 -->
-  <div
-    class="border-border text-muted-foreground flex items-center justify-between border-b py-3 text-sm"
-  >
+  <!-- 置中站名
+  <div class="pt-4 pb-2 text-center sm:pt-6 sm:pb-3">
     <a
-      href={getRelativeLocaleUrl(locale, "about")}
-      class:list={["hover:text-foreground", { "text-foreground": isActive("/about") }]}
+      href={getRelativeLocaleUrl(locale, "")}
+      class="font-display inline-flex items-center gap-2 text-4xl font-bold tracking-tight italic sm:text-5xl"
     >
-      關於
+      {site.title}
     </a>
-    <div class="flex items-center gap-4">
+    <div class="text-muted-foreground/40 mt-3 flex items-center justify-center gap-3" aria-hidden="true">
+      <span class="h-px w-8 bg-current"></span>
+      <span class="text-xs">Ｏ</span>
+      <span class="h-px w-8 bg-current"></span>
+    </div>
+  </div> -->
+
+  <!-- 導覽列（外框）：左側關於＋首頁＋分類、右側社群連結與深色模式切換 -->
+  <nav
+    id="nav-menu"
+    class="border-border relative mt-1 flex items-center gap-1 border-y px-3 py-2.5 sm:mt-2 sm:gap-2"
+  >
+    <div class="flex min-w-0 flex-1 items-center gap-1 sm:absolute sm:top-1/2 sm:left-1/2 sm:w-max sm:flex-none sm:-translate-x-1/2 sm:-translate-y-1/2 sm:gap-2">
+      <a
+        href={getRelativeLocaleUrl(locale, "about")}
+        class:list={[
+          "nav-link shrink-0 rounded-md px-3 py-2 text-base font-medium sm:px-4",
+          { "active-nav": isActive("/about") },
+        ]}
+      >
+        關於
+      </a>
+      <a
+        href={getRelativeLocaleUrl(locale, "")}
+        class:list={[
+          "nav-link shrink-0 rounded-md px-4 py-2 text-base font-medium",
+          { "active-nav": currentPath === "/" },
+        ]}
+      >
+        首頁
+      </a>
+      <button
+        id="menu-btn"
+        class="focus-outline p-2 sm:hidden"
+        aria-label="開啟選單"
+        aria-expanded="false"
+        aria-controls="menu-items"
+        data-label-open="開啟選單"
+        data-label-close="關閉選單"
+      >
+        <IconX id="close-icon" class="hidden" />
+        <IconMenuDeep id="menu-icon" />
+      </button>
+      <ul
+        id="menu-items"
+        class="border-border bg-background absolute inset-x-0 top-full z-10 hidden flex-col gap-1 rounded-xl border p-2 sm:static sm:flex sm:flex-row sm:items-center sm:gap-2 sm:border-0 sm:bg-transparent sm:p-0"
+      >
+        {
+          sections.map(({ path, label }) => (
+            <li>
+              <a
+                href={getRelativeLocaleUrl(locale, path)}
+                class:list={[
+                  "nav-link block rounded-md px-4 py-2 text-center text-base font-medium",
+                  { "active-nav": isActive(`/${path}`) },
+                ]}
+              >
+                {label}
+              </a>
+            </li>
+          ))
+        }
+        {
+          features.search !== false && (
+            <li class="flex items-center justify-center ps-2">
+              <LinkButton
+                href={getRelativeLocaleUrl(locale, "search")}
+                class:list={["focus-outline relative size-8"]}
+                title="搜尋"
+                aria-label="搜尋"
+              >
+                <IconSearch class="absolute top-1/2 left-1/2 size-5 -translate-x-1/2 -translate-y-1/2" />
+                <span class="sr-only">搜尋</span>
+              </LinkButton>
+            </li>
+          )
+        }
+      </ul>
+    </div>
+
+    <div class="ml-auto flex shrink-0 items-center gap-3">
       <Socials />
       {
         features.lightAndDarkMode && (
           <button
             id="theme-btn"
-            class="focus-outline hover:text-foreground relative size-5"
+            class="focus-outline hover:text-foreground relative size-6"
             title="切換深色/淺色模式"
             aria-label="auto"
             aria-live="polite"
           >
-            <IconMoon class="absolute top-[50%] left-[50%] size-5 translate-[-50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-            <IconSunHigh class="absolute top-[50%] left-[50%] size-5 translate-[-50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+            <IconMoon class="absolute top-[50%] left-[50%] size-6 translate-[-50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+            <IconSunHigh class="absolute top-[50%] left-[50%] size-6 translate-[-50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
           </button>
         )
       }
     </div>
-  </div>
-
-  <!-- 置中站名 -->
-  <div class="py-8 text-center sm:py-10">
-    <a
-      href={getRelativeLocaleUrl(locale, "")}
-      class="font-display inline-flex items-center gap-2 text-4xl font-bold tracking-tight italic sm:text-5xl"
-    >
-      <Image
-        src={featherIcon}
-        alt=""
-        class="not-italic h-8 w-auto sm:h-9"
-      />
-      {site.title}
-    </a>
-  </div>
-
-  <!-- 導覽列（外框） -->
-  <nav
-    id="nav-menu"
-    class="border-border relative mt-4 flex items-center justify-between border-y px-3 py-2.5 sm:mt-6 sm:justify-center sm:gap-2"
-  >
-    <a
-      href={getRelativeLocaleUrl(locale, "")}
-      class:list={[
-        "nav-link rounded-md px-4 py-2 text-base font-medium",
-        { "active-nav": currentPath === "/" },
-      ]}
-    >
-      首頁
-    </a>
-    <button
-      id="menu-btn"
-      class="focus-outline p-2 sm:hidden"
-      aria-label="開啟選單"
-      aria-expanded="false"
-      aria-controls="menu-items"
-      data-label-open="開啟選單"
-      data-label-close="關閉選單"
-    >
-      <IconX id="close-icon" class="hidden" />
-      <IconMenuDeep id="menu-icon" />
-    </button>
-    <ul
-      id="menu-items"
-      class="border-border bg-background absolute inset-x-0 top-full z-10 hidden flex-col gap-1 rounded-xl border p-2 sm:static sm:flex sm:flex-row sm:items-center sm:gap-2 sm:border-0 sm:bg-transparent sm:p-0"
-    >
-      {
-        sections.map(({ path, label }) => (
-          <li>
-            <a
-              href={getRelativeLocaleUrl(locale, path)}
-              class:list={[
-                "nav-link block rounded-md px-4 py-2 text-center text-base font-medium",
-                { "active-nav": isActive(`/${path}`) },
-              ]}
-            >
-              {label}
-            </a>
-          </li>
-        ))
-      }
-      {
-        features.search !== false && (
-          <li class="flex items-center justify-center ps-2">
-            <LinkButton
-              href={getRelativeLocaleUrl(locale, "search")}
-              class:list={["focus-outline relative size-8"]}
-              title="搜尋"
-              aria-label="搜尋"
-            >
-              <IconSearch class="absolute top-1/2 left-1/2 size-5 -translate-x-1/2 -translate-y-1/2" />
-              <span class="sr-only">搜尋</span>
-            </LinkButton>
-          </li>
-        )
-      }
-    </ul>
   </nav>
 </header>
 
 <script>
-  function toggleNav() {
-    const menuBtn = document.querySelector<HTMLButtonElement>("#menu-btn");
-    const menuItems = document.querySelector("#menu-items");
-    const menuIcon = document.querySelector("#menu-icon");
-    const closeIcon = document.querySelector("#close-icon");
+  function setupToggle(
+    btnId: string,
+    menuId: string,
+    openIconId: string,
+    closeIconId: string
+  ) {
+    const btn = document.querySelector<HTMLButtonElement>(btnId);
+    const menu = document.querySelector(menuId);
+    const openIcon = document.querySelector(openIconId);
+    const closeIcon = document.querySelector(closeIconId);
 
-    if (!menuBtn || !menuItems || !menuIcon || !closeIcon) return;
+    if (!btn || !menu || !openIcon || !closeIcon) return;
 
-    const openLabel = menuBtn.dataset.labelOpen ?? "Open menu";
-    const closeLabel = menuBtn.dataset.labelClose ?? "Close menu";
+    const openLabel = btn.dataset.labelOpen ?? "Open menu";
+    const closeLabel = btn.dataset.labelClose ?? "Close menu";
 
-    menuBtn.addEventListener("click", () => {
-      const openMenu = menuBtn.getAttribute("aria-expanded") === "true";
+    btn.addEventListener("click", () => {
+      const openMenu = btn.getAttribute("aria-expanded") === "true";
 
-      menuBtn.setAttribute("aria-expanded", openMenu ? "false" : "true");
-      menuBtn.setAttribute("aria-label", openMenu ? openLabel : closeLabel);
+      btn.setAttribute("aria-expanded", openMenu ? "false" : "true");
+      btn.setAttribute("aria-label", openMenu ? openLabel : closeLabel);
 
-      menuItems.classList.toggle("hidden");
-      menuItems.classList.toggle("flex");
-      menuIcon.classList.toggle("hidden");
+      menu.classList.toggle("hidden");
+      menu.classList.toggle("flex");
+      openIcon.classList.toggle("hidden");
       closeIcon.classList.toggle("hidden");
     });
   }
 
-  toggleNav();
+  function setupNavToggles() {
+    setupToggle("#menu-btn", "#menu-items", "#menu-icon", "#close-icon");
+  }
 
-  document.addEventListener("astro:after-swap", toggleNav);
+  setupNavToggles();
+
+  document.addEventListener("astro:after-swap", setupNavToggles);
 </script>
 
 <style>
+  #nav-menu {
+    box-shadow: 0 1px 2px color-mix(in oklab, var(--foreground) 6%, transparent);
+  }
+
   .nav-link {
     position: relative;
   }

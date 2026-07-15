@@ -58,16 +58,18 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
 ---
 
 <aside class="flex flex-col gap-8">
-  <div class="border-muted-foreground/40 bg-muted rounded-xl border border-dashed p-6 text-center">
+  <div class="glass-panel rounded-xl p-6 text-center">
     {
       config.site.avatar ? (
-        <img
-          src={config.site.avatar}
-          alt={config.site.author}
-          class="mx-auto size-28 rounded-full object-cover"
-        />
+        <div class="avatar-blob avatar-glass mx-auto size-40">
+          <img
+            src={config.site.avatar}
+            alt={config.site.author}
+            class="size-full object-cover"
+          />
+        </div>
       ) : (
-        <div class="media-placeholder text-foreground mx-auto flex size-28 items-center justify-center rounded-full text-2xl font-bold">
+        <div class="avatar-blob avatar-glass media-placeholder text-foreground mx-auto flex size-40 items-center justify-center text-2xl font-bold">
           {config.site.author.slice(0, 1)}
         </div>
       )
@@ -84,7 +86,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
       </div>
   </div>
 
-  <div class="border-muted-foreground/40 bg-muted rounded-xl border border-dashed p-6">
+  <div class="glass-panel rounded-xl p-6">
     <h2 class="font-bold">分類</h2>
     <ul class="border-muted-foreground/40 mt-3 border-t border-dashed pt-3">
       {
@@ -105,7 +107,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
 
   {
     recentItems.length > 0 && (
-      <div class="border-muted-foreground/40 bg-muted rounded-xl border border-dashed p-6">
+      <div class="glass-panel rounded-xl p-6">
         <h2 class="font-bold">最新文章</h2>
         <ul class="border-muted-foreground/40 mt-3 border-t border-dashed pt-3">
           {recentItems.map(({ title, href, pubDatetime, coverImage }) => (
@@ -114,10 +116,10 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
                 <Image
                   src={coverImage}
                   alt=""
-                  class="size-14 flex-none rounded-lg object-cover"
+                  class="photo-shadow size-14 flex-none rounded-lg object-cover"
                 />
               ) : (
-                <div class="media-placeholder size-14 flex-none rounded-lg" />
+                <div class="media-placeholder photo-shadow size-14 flex-none rounded-lg" />
               )}
               <div class="min-w-0">
                 <a
@@ -139,7 +141,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
 
   {
     tags.length > 0 && (
-      <div class="border-muted-foreground/40 bg-muted rounded-xl border border-dashed p-6">
+      <div class="glass-panel rounded-xl p-6">
         <h2 class="font-bold">標籤</h2>
         <ul class="border-muted-foreground/40 mt-3 flex flex-wrap gap-2 border-t border-dashed pt-3">
           {tags.map(tag => (

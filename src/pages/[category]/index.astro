@@ -43,6 +43,7 @@ const sidebarCategories = await getCategorySummaries();
     pageTitle={category.pageTitle}
     pageDesc={category.pageDesc}
     sidebarCategories={sidebarCategories}
+    coverImage={getCoverImage(items[0]?.data.coverImage)}
   >
     <ul>
       {

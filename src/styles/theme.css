@@ -16,13 +16,20 @@
 /* Light theme values — 明亮 neutral（近白，帶一點點暖調） */
 :root,
 [data-theme="light"] {
-  --background: #fafaf9;
+  --background: #faf8f3;
   --foreground: #292524;
   --accent: #7c6650;
-  --accent-foreground: #fafaf9;
-  --muted: #f5f5f4;
+  --accent-foreground: #fdfdfc;
+  --muted: #e7e4de;
   --muted-foreground: #78716c;
-  --border: #e7e5e4;
+  --border: #ececea;
+  /*
+   * 背景紙感顆粒的可見度（0~1，數字越大越明顯）。
+   * 顆粒本身的粗細／顏色定義在 src/assets/paper-grain.svg，
+   * 只調「明不明顯」的話改這個數字就好，不用碰那個 SVG。
+   * 沒有另外針對 dark 主題設定，兩種主題目前共用同一個數值。
+   */
+  --paper-grain-opacity: 0.35;
 }
 
 /* Dark theme values — 近黑 neutral（灰黑基底，暖色只留給 accent） */

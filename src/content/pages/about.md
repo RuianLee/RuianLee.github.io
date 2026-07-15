@@ -3,8 +3,8 @@ title: "關於"
 description: "關於這個網站，以及它的主人。"
 ---
 
-Hi, I'm adam — a full-time traveler, blogger, and photographer with a passion for finding beauty in every corner of the world. What started as a solo backpacking trip through Southeast Asia in 2018 turned into a life-changing journey that never really ended.
+Hi, I'm RuianLee — for about three years, I worked as a backend engineer at E.Sun Bank, building and maintaining credit card transaction systems. My day-to-day toolkit was Vue, JavaScript, Java, Spring Boot, and PL/SQL, working on the kind of infrastructure that has to be correct every single time.
 
-I believe travel is the greatest teacher. Every destination has reshaped how I see people, culture, food, and myself. Through this blog, I share honest stories, practical tips, and the kind of travel photography that makes you want to book a flight immediately.
+After that, I moved into a startup, where I taught design patterns and helped other engineers think more clearly about how they structure their code.
 
-When I'm not on the road, I'm usually editing photos in a cozy café, planning the next adventure, or teaching others how to travel smarter, deeper, and more sustainably.
+These days I'm pursuing something different: I'm currently attending the Full Time Training in the church in Taiwan (FTTT), pursuing my faith and living it out more fully. I love church life — the fellowship, the growth, and the journey of walking this out together with others.

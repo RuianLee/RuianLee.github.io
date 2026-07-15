@@ -31,6 +31,7 @@ const sidebarCategories = await getCategorySummaries();
     pageTitle="文集"
     pageDesc="關於技術與思考的長篇文章。"
     sidebarCategories={sidebarCategories}
+    coverImage={getCoverImage(page.data[0]?.data.coverImage)}
   >
     <ul>
       {

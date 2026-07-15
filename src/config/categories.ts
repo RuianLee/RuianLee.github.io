@@ -33,7 +33,7 @@ export interface CategoryDef {
 export const categories: CategoryDef[] = [
   {
     slug: "portfolio",
-    navLabel: "作品集",
+    navLabel: "測試",
     pageTitle: "作品集",
     pageDesc: "一些做過的作品與side project。",
     homeDesc: "作品集",

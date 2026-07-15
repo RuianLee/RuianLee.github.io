@@ -95,13 +95,15 @@ const sidebarCategories = await getCategorySummaries();
         <div class="flex flex-col items-center pb-6 text-center">
           {
             config.site.avatar ? (
-              <img
-                src={config.site.avatar}
-                alt={config.site.author}
-                class="size-40 rounded-full object-cover"
-              />
+              <div class="avatar-blob avatar-glass size-40">
+                <img
+                  src={config.site.avatar}
+                  alt={config.site.author}
+                  class="size-full object-cover"
+                />
+              </div>
             ) : (
-              <div class="media-placeholder text-foreground flex size-40 items-center justify-center rounded-full text-3xl font-bold">
+              <div class="avatar-blob avatar-glass media-placeholder text-foreground flex size-40 items-center justify-center text-3xl font-bold">
                 {config.site.author.slice(0, 1)}
               </div>
             )
@@ -122,7 +124,10 @@ const sidebarCategories = await getCategorySummaries();
           </div>
         </div>
 
-        <div class="app-prose border-muted-foreground/40 border-b border-dashed pb-10">
+        <!-- <div class="app-prose border-muted-foreground/40 border-b border-dashed pb-10 text-center">
+          <Content />
+        </div> -->
+        <div class="app-prose border-muted-foreground/40 border-b border-dashed pb-10 mx-auto w-fit text-center">
           <Content />
         </div>
 
