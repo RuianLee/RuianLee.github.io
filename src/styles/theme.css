@@ -29,7 +29,7 @@
    * 只調「明不明顯」的話改這個數字就好，不用碰那個 SVG。
    * 沒有另外針對 dark 主題設定，兩種主題目前共用同一個數值。
    */
-  --paper-grain-opacity: 0.35;
+  --paper-grain-opacity: 0.3;
 }
 
 /* Dark theme values — 近黑 neutral（灰黑基底，暖色只留給 accent） */

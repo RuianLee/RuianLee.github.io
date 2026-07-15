@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300">
-  <!--
+  
     紙感顆粒的雜訊來源。三個實際會想調的參數：
     - baseFrequency：顆粒粗細，數字越小顆粒越大越粗獷，越大越細越像紙纖維
     - numOctaves：細節層次，2~4 之間差異不大，通常不用動
@@ -7,7 +7,7 @@
 
     顆粒「明不明顯」不在這個檔案裡調——那是 src/styles/theme.css 裡的
     --paper-grain-opacity 變數，改那邊就好，不用碰這個 SVG。
-  -->
+  
   <filter id="grain">
     <feTurbulence
       type="fractalNoise"
