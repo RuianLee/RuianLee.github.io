@@ -1,11 +1,16 @@
 ---
 import { getCollection, render, type CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
 import PostLayout from "@/layouts/PostLayout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Datetime from "@/components/Datetime.astro";
 import BackButton from "@/components/BackButton.astro";
+import { getCoverImage } from "@/utils/getCoverImage";
 import { genericCategories, type CategoryDef } from "@/config/categories";
+import IconUser from "@/assets/icons/IconUser.svg";
+import IconBook from "@/assets/icons/IconBook.svg";
+import IconClock from "@/assets/icons/IconClock.svg";
 import config from "@/config";
 
 /** Fields any generic category entry might carry, across collection schemas. */
@@ -14,10 +19,12 @@ type GenericData = {
   description: string;
   pubDatetime: Date;
   modDatetime?: Date | null;
+  author: string;
   tags?: string[];
   url?: string;
   bookTitle?: string;
   bookAuthor?: string;
+  coverImage?: string;
 };
 
 type GenericEntry = CollectionEntry<CategoryDef["slug"]>;
@@ -35,10 +42,26 @@ export async function getStaticPaths() {
   return paths.flat();
 }
 
-const { category, entry } = Astro.props as { category: CategoryDef; entry: GenericEntry };
+const { category, entry } = Astro.props as {
+  category: CategoryDef;
+  entry: GenericEntry;
+};
 const data = entry.data as GenericData;
-const { title, description, pubDatetime, modDatetime, tags, url, bookTitle, bookAuthor } = data;
-const { Content } = await render(entry);
+const {
+  title,
+  description,
+  pubDatetime,
+  modDatetime,
+  author,
+  tags,
+  url,
+  bookTitle,
+  bookAuthor,
+  coverImage,
+} = data;
+const resolvedCover = getCoverImage(coverImage);
+const { Content, remarkPluginFrontmatter } = await render(entry);
+const { minutesRead } = remarkPluginFrontmatter as { minutesRead: number };
 ---
 
 <PostLayout
@@ -56,17 +79,24 @@ const { Content } = await render(entry);
     class:list={["app-layout", { "mt-8": !config.features.showBackButton }]}
     data-pagefind-body
   >
-    <h1
-      class:list={[
-        "inline-block text-2xl font-bold sm:text-3xl",
-        { "text-accent font-heading": category.layout === "list" },
-      ]}
-    >
+    <h1 class="font-heading inline-block text-2xl font-bold sm:text-3xl">
       {title}
     </h1>
 
-    <div class="my-2 flex flex-wrap items-center gap-2">
+    <div class="text-muted-foreground my-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm sm:text-base">
+      <span class="flex items-center gap-1.5">
+        <IconUser class="size-5" />
+        {author}
+      </span>
       <Datetime {pubDatetime} {modDatetime} size="lg" />
+      <span class="flex items-center gap-1.5">
+        <IconBook class="size-5" />
+        {category.navLabel}
+      </span>
+      <span class="flex items-center gap-1.5">
+        <IconClock class="size-5" />
+        {minutesRead} 分鐘閱讀
+      </span>
       {
         url && (
           <a
@@ -88,6 +118,20 @@ const { Content } = await render(entry);
       }
     </div>
 
+    <hr class="my-8" />
+
+    {
+      resolvedCover ? (
+        <Image
+          src={resolvedCover}
+          alt=""
+          class="aspect-video w-full rounded-xl object-cover"
+        />
+      ) : (
+        <div class="media-placeholder aspect-video w-full rounded-xl" />
+      )
+    }
+
     {
       tags && tags.length > 0 && (
         <ul class="my-4 flex flex-wrap gap-2">
@@ -100,7 +144,7 @@ const { Content } = await render(entry);
       )
     }
 
-    <article class="app-prose max-w-app mt-8 w-full">
+    <article class="app-prose max-w-app mx-auto mt-8 w-full">
       <Content />
     </article>
   </main>

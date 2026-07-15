@@ -31,3 +31,6 @@ public/pagefind
 
 # docker compose
 compose.override.yaml
+
+# local backups from `npm run post -- delete-category`
+.post-backups/

@@ -10,27 +10,28 @@
   --font-app: var(--font-sans);
   --font-heading: var(--font-heading-latin), var(--font-cjk);
   --font-sans: var(--font-body-latin), var(--font-cjk);
+  --font-display: var(--font-display-latin), var(--font-cjk);
 }
 
-/* Light theme values — 暖調 neutral（米杏/奶茶色） */
+/* Light theme values — 明亮 neutral（近白，帶一點點暖調） */
 :root,
 [data-theme="light"] {
-  --background: #faf6f0;
-  --foreground: #3d362c;
+  --background: #fafaf9;
+  --foreground: #292524;
   --accent: #7c6650;
-  --accent-foreground: #faf6f0;
-  --muted: #efe4d5;
-  --muted-foreground: #8a7a68;
-  --border: #e2d5c2;
+  --accent-foreground: #fafaf9;
+  --muted: #f5f5f4;
+  --muted-foreground: #78716c;
+  --border: #e7e5e4;
 }
 
-/* Dark theme values */
+/* Dark theme values — 近黑 neutral（灰黑基底，暖色只留給 accent） */
 [data-theme="dark"] {
-  --background: #201b15;
-  --foreground: #ece2d3;
-  --accent: #cbb69c;
-  --accent-foreground: #201b15;
-  --muted: #332b21;
-  --muted-foreground: #ab9a86;
-  --border: #4a3f31;
+  --background: #18181b;
+  --foreground: #e4e4e7;
+  --accent: #e0a374;
+  --accent-foreground: #18181b;
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+  --border: #3f3f46;
 }

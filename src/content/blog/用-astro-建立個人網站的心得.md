@@ -2,6 +2,7 @@
 title: "用 Astro 建立個人網站的心得"
 description: "記錄用 Astro 搭配 AstroPaper 主題，改出一個「書香氣息」風格個人網站的過程與取捨。"
 pubDatetime: 2026-07-01
+coverImage: "用-astro-建立個人網站的心得"
 ---
 
 最近想要一個安靜、乾淨、有點書卷氣的個人網站，用來放作品集、文章、隨筆跟一些讀書心得。挑了 [Astro](https://astro.build/) 當框架，理由很單純：大部分頁面是靜態內容，不需要整包 React／Vue 的執行期負擔，Astro 預設把頁面編譯成純 HTML，載入速度快，對 SEO 也友善。

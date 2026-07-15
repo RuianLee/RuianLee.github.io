@@ -3,15 +3,8 @@ title: "關於"
 description: "關於這個網站，以及它的主人。"
 ---
 
-哈囉，歡迎來到這個小小的角落。
+Hi, I'm adam — a full-time traveler, blogger, and photographer with a passion for finding beauty in every corner of the world. What started as a solo backpacking trip through Southeast Asia in 2018 turned into a life-changing journey that never really ended.
 
-這裡放著一些作品、一些文字、一些生活裡的隨手記錄，還有讀書與靈修的心得分享。內容會慢慢累積，不急著填滿。
+I believe travel is the greatest teacher. Every destination has reshaped how I see people, culture, food, and myself. Through this blog, I share honest stories, practical tips, and the kind of travel photography that makes you want to book a flight immediately.
 
-## 這裡有什麼
-
-- **作品集**——做過的一些專案與 side project。
-- **文集**——比較長篇、偏技術與思考的文章。
-- **隨筆**——生活中的隨手記錄，不需要理由。
-- **靈修分享**——讀書與靈修的心得，附上書名與作者。
-
-如果想聯絡我，可以透過首頁的社群連結找到我。
+When I'm not on the road, I'm usually editing photos in a cozy café, planning the next adventure, or teaching others how to travel smarter, deeper, and more sustainably.

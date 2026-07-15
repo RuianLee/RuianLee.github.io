@@ -1,0 +1,159 @@
+---
+import { getCollection } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Image } from "astro:assets";
+import Socials from "./Socials.astro";
+import { getSortedPosts } from "@/utils/getSortedPosts";
+import { getPostUrl } from "@/utils/getPostPaths";
+import { getCoverImage } from "@/utils/getCoverImage";
+import { categories as categoryDefs } from "@/config/categories";
+import config from "@/config";
+
+type Props = {
+  locale: string;
+  categories: { path: string; label: string; count: number }[];
+  tags?: string[];
+};
+
+const { locale, categories, tags = [] } = Astro.props;
+
+/** Fields any generic category entry might carry, across collection schemas. */
+type GenericEntry = {
+  id: string;
+  filePath?: string;
+  data: {
+    title: string;
+    pubDatetime: Date;
+    modDatetime?: Date | null;
+    draft?: boolean;
+    coverImage?: string;
+  };
+};
+
+const categoryEntries = await Promise.all(
+  categoryDefs.map(({ slug }) => getCollection(slug))
+);
+
+const recentItems = categoryDefs
+  .flatMap(({ slug }, i) => {
+    const entries = getSortedPosts(categoryEntries[i] as GenericEntry[]);
+    return entries.map(({ id, filePath, data }) => ({
+      title: data.title,
+      pubDatetime: data.pubDatetime,
+      coverImage: getCoverImage(data.coverImage),
+      href:
+        slug === "blog"
+          ? getPostUrl(id, filePath, locale)
+          : getRelativeLocaleUrl(locale, `${slug}/${id}`),
+    }));
+  })
+  .sort((a, b) => b.pubDatetime.getTime() - a.pubDatetime.getTime())
+  .slice(0, 4);
+
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
+---
+
+<aside class="flex flex-col gap-8">
+  <div class="border-muted-foreground/40 bg-muted rounded-xl border border-dashed p-6 text-center">
+    {
+      config.site.avatar ? (
+        <img
+          src={config.site.avatar}
+          alt={config.site.author}
+          class="mx-auto size-28 rounded-full object-cover"
+        />
+      ) : (
+        <div class="media-placeholder text-foreground mx-auto flex size-28 items-center justify-center rounded-full text-2xl font-bold">
+          {config.site.author.slice(0, 1)}
+        </div>
+      )
+    }
+    <p class="font-heading mt-4 text-lg font-bold tracking-tight">{config.site.author}</p>
+    <p class="text-muted-foreground mt-2 text-sm">
+      {config.site.description}
+    </p>
+    <!-- <p class="text-muted-foreground mt-2 text-sm">
+      {config.site.tagline ?? config.site.description}
+    </p> -->
+      <div class="flex justify-center">
+        <Socials />
+      </div>
+  </div>
+
+  <div class="border-muted-foreground/40 bg-muted rounded-xl border border-dashed p-6">
+    <h2 class="font-bold">分類</h2>
+    <ul class="border-muted-foreground/40 mt-3 border-t border-dashed pt-3">
+      {
+        categories.map(({ path, label, count }) => (
+          <li>
+            <a
+              href={getRelativeLocaleUrl(locale, path)}
+              class="hover:text-muted-foreground flex items-center justify-between py-2 text-sm"
+            >
+              <span>{label}</span>
+              <span class="text-muted-foreground">({count})</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  {
+    recentItems.length > 0 && (
+      <div class="border-muted-foreground/40 bg-muted rounded-xl border border-dashed p-6">
+        <h2 class="font-bold">最新文章</h2>
+        <ul class="border-muted-foreground/40 mt-3 border-t border-dashed pt-3">
+          {recentItems.map(({ title, href, pubDatetime, coverImage }) => (
+            <li class="border-muted-foreground/40 flex items-center gap-3 border-b border-dashed py-3 last:border-none last:pb-0">
+              {coverImage ? (
+                <Image
+                  src={coverImage}
+                  alt=""
+                  class="size-14 flex-none rounded-lg object-cover"
+                />
+              ) : (
+                <div class="media-placeholder size-14 flex-none rounded-lg" />
+              )}
+              <div class="min-w-0">
+                <a
+                  href={href}
+                  class="line-clamp-2 text-sm font-medium hover:underline"
+                >
+                  {title}
+                </a>
+                <p class="text-muted-foreground mt-0.5 text-xs">
+                  {dateFormatter.format(pubDatetime)}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  {
+    tags.length > 0 && (
+      <div class="border-muted-foreground/40 bg-muted rounded-xl border border-dashed p-6">
+        <h2 class="font-bold">標籤</h2>
+        <ul class="border-muted-foreground/40 mt-3 flex flex-wrap gap-2 border-t border-dashed pt-3">
+          {tags.map(tag => (
+            <li>
+              <a
+                href={getRelativeLocaleUrl(locale, `tags/${tag}`)}
+                class="bg-background hover:text-accent block rounded-full px-2.5 py-0.5 text-xs transition-colors"
+              >
+                {tag}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+</aside>

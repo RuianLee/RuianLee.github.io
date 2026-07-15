@@ -17,6 +17,7 @@ import {
   transformerNotationWordHighlight,
 } from "@shikijs/transformers";
 import { transformerFileName } from "./src/utils/transformers/fileName";
+import { remarkReadingTime } from "./src/utils/remarkPlugins/readingTime";
 import config from "./astro-paper.config";
 
 export default defineConfig({
@@ -34,6 +35,7 @@ export default defineConfig({
       remarkPlugins: [
         remarkToc,
         [remarkCollapse, { test: "Table of contents" }],
+        remarkReadingTime,
       ],
       rehypePlugins: [rehypeCallouts],
     }),
@@ -79,6 +81,15 @@ export default defineConfig({
       weights: [400, 500, 700, 900],
       styles: ["normal"],
       formats: ["woff", "ttf"],
+    },
+    {
+      name: "Playfair Display",
+      cssVariable: "--font-display-latin",
+      provider: fontProviders.google(),
+      fallbacks: ["serif"],
+      weights: [700],
+      styles: ["italic"],
+      formats: ["woff2"],
     },
   ],
   env: {

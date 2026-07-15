@@ -1,0 +1,194 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import IconArrowLeft from "@/assets/icons/IconArrowLeft.svg";
+import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
+
+type Slide = {
+  title: string;
+  description: string;
+  pubDatetime: Date;
+  href: string;
+  coverImage?: ImageMetadata;
+};
+
+type Props = {
+  slides: Slide[];
+};
+
+const { slides } = Astro.props;
+
+// Dates are always shown in English, regardless of site locale.
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
+---
+
+{
+  slides.length > 0 && (
+    <section id="hero-carousel" class="relative mt-8 overflow-hidden">
+      {slides.map(({ title, description, pubDatetime, href, coverImage }, i) => (
+        <div
+          data-slide
+          class:list={["hero-slide relative", { "is-active": i === 0 }]}
+          inert={i !== 0}
+        >
+          {coverImage ? (
+            <Image
+              src={coverImage}
+              alt=""
+              class="absolute inset-0 h-full w-full object-cover"
+            />
+          ) : (
+            <div class="media-placeholder absolute inset-0" />
+          )}
+          <div class="relative p-10 sm:p-24">
+            <div class="bg-background mx-auto max-w-2xl p-8 text-center shadow-sm sm:p-12">
+              <p class="text-muted-foreground text-sm tracking-wide uppercase">
+                {dateFormatter.format(pubDatetime)}
+              </p>
+              <h2 class="mt-3 text-2xl font-bold sm:text-3xl">{title}</h2>
+              <p class="text-muted-foreground mt-4 text-sm">{description}</p>
+              <a
+                href={href}
+                class="bg-muted mt-6 inline-block px-5 py-2.5 text-sm font-medium hover:opacity-80"
+              >
+                閱讀更多
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+
+      {slides.length > 1 && (
+        <>
+          <button
+            type="button"
+            data-carousel-prev
+            aria-label="上一頁"
+            class="bg-background/80 focus-outline absolute top-1/2 left-3 flex size-9 -translate-y-1/2 items-center justify-center rounded-full sm:left-5"
+          >
+            <IconArrowLeft class="size-4 rtl:rotate-180" />
+          </button>
+          <button
+            type="button"
+            data-carousel-next
+            aria-label="下一頁"
+            class="bg-background/80 focus-outline absolute top-1/2 right-3 flex size-9 -translate-y-1/2 items-center justify-center rounded-full sm:right-5"
+          >
+            <IconArrowRight class="size-4 rtl:rotate-180" />
+          </button>
+          <div class="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
+            {slides.map((_, i) => (
+              <button
+                type="button"
+                data-carousel-dot
+                aria-label={`slide ${i + 1}`}
+                class:list={[
+                  "size-2 rounded-full transition-colors",
+                  i === 0 ? "bg-foreground" : "bg-foreground/25",
+                ]}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </section>
+  )
+}
+
+<script>
+  const AUTOPLAY_INTERVAL_MS = 5000;
+  let autoplayId: ReturnType<typeof setInterval> | undefined;
+
+  function initCarousel() {
+    clearInterval(autoplayId);
+    autoplayId = undefined;
+
+    const root = document.querySelector<HTMLElement>("#hero-carousel");
+    if (!root) return;
+
+    const slides = Array.from(root.querySelectorAll<HTMLElement>("[data-slide]"));
+    const dots = Array.from(root.querySelectorAll<HTMLElement>("[data-carousel-dot]"));
+    const prevBtn = root.querySelector<HTMLElement>("[data-carousel-prev]");
+    const nextBtn = root.querySelector<HTMLElement>("[data-carousel-next]");
+    if (slides.length === 0) return;
+
+    let index = 0;
+
+    function render() {
+      slides.forEach((slide, i) => {
+        const active = i === index;
+        slide.classList.toggle("is-active", active);
+        slide.toggleAttribute("inert", !active);
+      });
+      dots.forEach((dot, i) => {
+        dot.classList.toggle("bg-foreground", i === index);
+        dot.classList.toggle("bg-foreground/25", i !== index);
+      });
+    }
+
+    function goTo(next: number) {
+      index = (next + slides.length) % slides.length;
+      render();
+    }
+
+    function startAutoplay() {
+      if (slides.length < 2) return;
+      clearInterval(autoplayId);
+      autoplayId = setInterval(() => goTo(index + 1), AUTOPLAY_INTERVAL_MS);
+    }
+
+    function stopAutoplay() {
+      clearInterval(autoplayId);
+      autoplayId = undefined;
+    }
+
+    prevBtn?.addEventListener("click", () => {
+      goTo(index - 1);
+      startAutoplay();
+    });
+    nextBtn?.addEventListener("click", () => {
+      goTo(index + 1);
+      startAutoplay();
+    });
+    dots.forEach((dot, i) => {
+      dot.addEventListener("click", () => {
+        goTo(i);
+        startAutoplay();
+      });
+    });
+
+    root.addEventListener("mouseenter", stopAutoplay);
+    root.addEventListener("mouseleave", startAutoplay);
+
+    startAutoplay();
+  }
+
+  initCarousel();
+  document.addEventListener("astro:after-swap", initCarousel);
+</script>
+
+<style>
+  #hero-carousel {
+    display: grid;
+  }
+
+  .hero-slide {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+  }
+
+  .hero-slide.is-active {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-slide {
+      transition: none;
+    }
+  }
+</style>

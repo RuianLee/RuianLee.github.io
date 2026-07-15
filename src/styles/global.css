@@ -41,7 +41,7 @@
 }
 
 @utility app-layout {
-  @apply max-w-app mx-auto w-full px-4;
+  @apply mx-auto w-full max-w-6xl px-4;
 }
 
 /* Header 用比內文更寬的容器，讓導覽列延伸得更開闊 */
@@ -50,7 +50,7 @@
 }
 
 @utility active-nav {
-  @apply bg-muted rounded-md;
+  @apply text-accent;
 }
 
 /* 卡片——用於作品集/首頁最新文章/分類等區塊 */

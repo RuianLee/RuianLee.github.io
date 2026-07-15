@@ -11,6 +11,10 @@ interface SiteConfig {
   profile?: string;
   /** Fallback OG image filename in /public, e.g. "og.jpg" */
   ogImage?: string;
+  /** Author avatar path under /public, e.g. "/avatar.jpg". Falls back to an initial letter when unset. */
+  avatar?: string;
+  /** Short self-intro shown under the author name, e.g. "Travel Blogger · Photographer · Storyteller" */
+  tagline?: string;
   /** HTML lang attribute, defaults to "en" */
   lang?: string;
   /** IANA timezone for post dates, e.g. "Asia/Bangkok" */
@@ -115,7 +119,7 @@ type ResolvedSiteConfig = Required<
     | "ogImage"
   >
 > &
-  Pick<SiteConfig, "profile" | "googleVerification">;
+  Pick<SiteConfig, "profile" | "googleVerification" | "avatar" | "tagline">;
 
 export interface ResolvedAstroPaperConfig {
   site: ResolvedSiteConfig;

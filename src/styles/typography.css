@@ -13,6 +13,11 @@
       @apply text-foreground mb-3;
     }
 
+    h2,
+    h3 {
+      @apply border-border border-b border-dashed pb-2;
+    }
+
     p,
     strong,
     ol,

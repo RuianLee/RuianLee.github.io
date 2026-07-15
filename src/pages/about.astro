@@ -1,11 +1,17 @@
 ---
-import { getEntry, render } from "astro:content";
+import { getEntry, getCollection, render } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
-import Breadcrumb from "@/components/Breadcrumb.astro";
 import Main from "@/components/Main.astro";
 import Footer from "@/components/Footer.astro";
+import Sidebar from "@/components/Sidebar.astro";
+import Socials from "@/components/Socials.astro";
+import { getSortedPosts } from "@/utils/getSortedPosts";
+import { getCategorySummaries } from "@/utils/getCategorySummaries";
+import { categories as categoryDefs } from "@/config/categories";
 import config from "@/config";
+
+const locale = Astro.currentLocale ?? config.site.lang;
 
 const about = await getEntry("pages", "about");
 
@@ -16,6 +22,61 @@ if (!about) {
 }
 
 const { Content } = await render(about);
+
+// Real, derived-from-content stats — no invented numbers.
+const categoryEntries = await Promise.all(
+  categoryDefs.map(({ slug }) => getCollection(slug))
+);
+const categorySorted = categoryEntries.map(getSortedPosts);
+const totalPosts = categorySorted.reduce((sum, entries) => sum + entries.length, 0);
+
+const allPubDatetimes = categorySorted.flatMap(entries =>
+  entries.map(({ data }) => data.pubDatetime)
+);
+const earliestDatetime =
+  allPubDatetimes.length > 0
+    ? new Date(Math.min(...allPubDatetimes.map(d => d.getTime())))
+    : new Date();
+const daysSince = Math.max(
+  1,
+  Math.round((Date.now() - earliestDatetime.getTime()) / (1000 * 60 * 60 * 24))
+);
+
+const portfolioSorted =
+  categorySorted[categoryDefs.findIndex(c => c.slug === "portfolio")] ?? [];
+const tools = [
+  ...new Set(
+    portfolioSorted.flatMap(({ data }) => ("tags" in data ? data.tags : []))
+  ),
+];
+
+const timeline = [...portfolioSorted].sort(
+  (a, b) => a.data.pubDatetime.getTime() - b.data.pubDatetime.getTime()
+);
+
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "short",
+});
+
+const stats = [
+  { value: totalPosts, label: "篇文章" },
+  { value: categoryDefs.length, label: "個分類" },
+  { value: tools.length, label: "項技術／工具" },
+  { value: daysSince, label: "天的紀錄" },
+];
+
+// Illustrative self-assessment, not measured data.
+const skills = [
+  { name: "前端開發（Astro）", value: 90 },
+  { name: "TypeScript", value: 85 },
+  { name: "自動化（Claude Code）", value: 92 },
+  { name: "LaTeX 排版", value: 80 },
+  { name: "VSCode 擴充套件開發", value: 75 },
+  { name: "筆記系統設計", value: 88 },
+];
+
+const sidebarCategories = await getCategorySummaries();
 ---
 
 <Layout
@@ -26,10 +87,112 @@ const { Content } = await render(about);
 >
   <Header />
 
-  <Breadcrumb />
+  <Main pageTitle={about.data.title} showTitle={false}>
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-[280px_1fr]">
+      <Sidebar locale={locale} categories={sidebarCategories} tags={tools} />
 
-  <Main pageTitle={about.data.title} class="app-prose">
-    <Content />
+      <div>
+        <div class="flex flex-col items-center pb-6 text-center">
+          {
+            config.site.avatar ? (
+              <img
+                src={config.site.avatar}
+                alt={config.site.author}
+                class="size-40 rounded-full object-cover"
+              />
+            ) : (
+              <div class="media-placeholder text-foreground flex size-40 items-center justify-center rounded-full text-3xl font-bold">
+                {config.site.author.slice(0, 1)}
+              </div>
+            )
+          }
+          
+          <h2 class="font-heading mt-4 text-2xl font-bold tracking-tight">
+            {config.site.author}
+          </h2>
+          {
+            config.site.tagline && (
+              <p class="text-muted-foreground mt-1 text-sm">
+                {config.site.tagline}
+              </p>
+            )
+          }
+          <div class="flex justify-center">
+            <Socials />
+          </div>
+        </div>
+
+        <div class="app-prose border-muted-foreground/40 border-b border-dashed pb-10">
+          <Content />
+        </div>
+
+        <div class="border-muted-foreground/40 grid grid-cols-2 gap-6 border-b border-dashed py-10 text-center sm:grid-cols-4">
+          {
+            stats.map(({ value, label }) => (
+              <div>
+                <p class="text-3xl font-bold">{value}</p>
+                <p class="text-muted-foreground mt-1 text-sm">{label}</p>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="border-muted-foreground/40 border-b border-dashed py-10">
+          <h2 class="text-xl font-bold">常用技能</h2>
+          <div class="mt-4 grid grid-cols-1 gap-x-10 gap-y-5 sm:grid-cols-2">
+            {
+              skills.map(({ name, value }) => (
+                <div>
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="font-medium">{name}</span>
+                    <span class="text-muted-foreground">{value}%</span>
+                  </div>
+                  <div class="bg-muted mt-2 h-2 overflow-hidden rounded-full">
+                    <div
+                      class="bg-foreground h-full rounded-full"
+                      style={`width: ${value}%`}
+                    />
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        {
+          tools.length > 0 && (
+            <div class="border-muted-foreground/40 border-b border-dashed py-10">
+              <h2 class="text-xl font-bold">常用技術與工具</h2>
+              <ul class="mt-4 flex flex-wrap gap-2">
+                {tools.map(tool => (
+                  <li class="bg-muted rounded-full px-3 py-1 text-sm">{tool}</li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+
+        {
+          timeline.length > 0 && (
+            <div class="py-10">
+              <h2 class="text-xl font-bold">建站足跡</h2>
+              <ol class="border-muted-foreground/40 mt-6 ml-1.5 border-l border-dashed">
+                {timeline.map(({ data }) => (
+                  <li class="relative py-4 pl-6 first:pt-0 last:pb-0">
+                    <span class="bg-accent absolute top-5 -left-[5px] size-2.5 rounded-full first:top-1" />
+                    <p class="text-muted-foreground text-xs tracking-wide uppercase">
+                      {dateFormatter.format(data.pubDatetime)}
+                    </p>
+                    <p class="mt-1 font-bold">{data.title}</p>
+                    <p class="text-muted-foreground mt-1 text-sm">{data.description}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )
+        }
+      </div>
+    </div>
   </Main>
 
   <Footer />
