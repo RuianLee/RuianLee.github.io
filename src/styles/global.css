@@ -21,8 +21,8 @@
   }
   body {
     position: relative;
-    line-height: 1.7;
-    letter-spacing: 0;
+    line-height: 1.8;
+    letter-spacing: 0.02em;
   }
   /*
    * 紙感顆粒——雜訊圖案本身定義在 src/assets/paper-grain.svg（一般 SVG 檔案，
@@ -48,9 +48,9 @@
   h5,
   h6 {
     font-family: var(--font-heading);
-    font-weight: 800;
-    line-height: 1.15;
-    letter-spacing: -0.01em;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
   }
 }
 

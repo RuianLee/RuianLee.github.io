@@ -35,58 +35,58 @@ const {
     mb-6
     last:mb-0
     flex flex-col
-    gap-4
+    gap-0
     overflow-hidden
     rounded-xl
-    border border-muted-foreground/20
-    p-6
-    sm:relative
-    sm:h-55
+    p-0
+    lg:flex-row
   "
 >
   {  
     coverImage ? (
-      <div class="w-full flex-none sm:absolute sm:inset-y-0 sm:left-0 sm:flex sm:w-55 sm:items-center sm:justify-center">
+      <div class="w-full flex-none overflow-hidden lg:w-96 lg:shrink-0 lg:self-stretch">
         <Image
           src={coverImage}
           alt=""
-          width={480}
-          height={480}
-          class="aspect-video w-full rounded-xl object-cover sm:aspect-square sm:h-64 sm:w-60"
+          width={640}
+          height={360}
+          class="aspect-video w-full object-cover object-center lg:h-full lg:aspect-auto"
         />
       </div>
     ) : (
-      <div class="w-full flex-none sm:absolute sm:inset-y-0 sm:left-0 sm:flex sm:w-56 sm:items-center sm:justify-center">
-        <div class="media-placeholder aspect-video w-full rounded-xl sm:aspect-square sm:h-60 sm:w-60" />
+      <div class="w-full flex-none overflow-hidden lg:w-96 lg:shrink-0 lg:self-stretch">
+        <div class="media-placeholder aspect-video w-full lg:h-full" />
       </div>
     )
   }
-  <div class="min-w-0 overflow-hidden sm:pl-60">
-    <a
-      href={href}
-      class:list={[
-        "block text-lg font-bold",
-        "underline-offset-4 hover:underline",
-        "focus-visible:no-underline focus-visible:underline-offset-0",
-      ]}
-    >
-      <Heading class="truncate" transition:name={toTransitionName(title)}>
-        {title}
-      </Heading>
-    </a>
-    <div class="text-muted-foreground mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+  <div class="flex min-w-0 flex-1 flex-col justify-between p-6 sm:p-8 lg:min-h-0">
+    <div>
+      <a
+        href={href}
+        class:list={[
+          "block text-xl font-bold leading-tight sm:text-2xl text-foreground",
+          "underline-offset-4 hover:underline",
+          "focus-visible:no-underline focus-visible:underline-offset-0",
+        ]}
+      >
+        <Heading transition:name={toTransitionName(title)}>
+          {title}
+        </Heading>
+      </a>
+      <div class="text-muted-foreground mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm sm:text-base">
       <span class="flex items-center gap-1.5">
         <IconUser class="size-4" />
-        {config.site.author}
+          <span class="text-muted-foreground">{config.site.author}</span>
       </span>
       <Datetime {pubDatetime} {modDatetime} {timezone} />
     </div>
-    <p class="mt-2 line-clamp-3">{description}</p>
+      <p class="text-muted-foreground mt-3 text-lg sm:text-xl">{description}</p>
+    </div>
     <a
       href={href}
-      class="border-muted-foreground/40 hover:border-accent hover:text-accent mt-3 inline-block border border-dashed px-4 py-2 text-sm font-medium transition-colors"
+      class="mt-4 self-end inline-flex border border-dashed border-muted-foreground/50 text-muted-foreground px-6 py-3 text-base font-medium transition-colors hover:border-accent hover:text-accent w-fit"
     >
-      閱讀更多
+      Read More
     </a>
   </div>
 </li>

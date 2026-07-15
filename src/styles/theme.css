@@ -8,7 +8,7 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
   --font-app: var(--font-sans);
-  --font-heading: var(--font-heading-latin), var(--font-cjk);
+  --font-heading: var(--font-heading-latin), 'Noto Serif TC', var(--font-cjk);
   --font-sans: var(--font-body-latin), var(--font-cjk);
   --font-display: var(--font-display-latin), var(--font-cjk);
 }
@@ -23,6 +23,7 @@
   --muted: #e7e4de;
   --muted-foreground: #78716c;
   --border: #ececea;
+  --font-cjk: 'Noto Sans TC', 'Noto Sans', ui-sans-serif, system-ui, sans-serif;
   /*
    * 背景紙感顆粒的可見度（0~1，數字越大越明顯）。
    * 顆粒本身的粗細／顏色定義在 src/assets/paper-grain.svg，

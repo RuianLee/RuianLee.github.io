@@ -74,7 +74,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
         </div>
       )
     }
-    <p class="font-heading mt-4 text-lg font-bold tracking-tight">{config.site.author}</p>
+    <p class="font-heading mt-4 text-2xl font-bold tracking-tight">{config.site.author}</p>
     <p class="text-muted-foreground mt-2 text-sm">
       {config.site.description}
     </p>
@@ -87,7 +87,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   </div>
 
   <div class="glass-panel rounded-xl p-6">
-    <h2 class="font-bold">分類</h2>
+    <h2 class="font-bold text-xl">分類</h2>
     <ul class="border-muted-foreground/40 mt-3 border-t border-dashed pt-3">
       {
         categories.map(({ path, label, count }) => (
@@ -108,7 +108,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   {
     recentItems.length > 0 && (
       <div class="glass-panel rounded-xl p-6">
-        <h2 class="font-bold">最新文章</h2>
+        <h2 class="font-bold text-xl">最新文章</h2>
         <ul class="border-muted-foreground/40 mt-3 border-t border-dashed pt-3">
           {recentItems.map(({ title, href, pubDatetime, coverImage }) => (
             <li class="border-muted-foreground/40 flex items-center gap-3 border-b border-dashed py-3 last:border-none last:pb-0">

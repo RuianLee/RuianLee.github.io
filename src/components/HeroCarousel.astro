@@ -44,21 +44,17 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
           ) : (
             <div class="media-placeholder absolute inset-0" />
           )}
-          <div class="relative p-10 sm:p-24">
-            <div class="glass-panel mx-auto max-w-2xl rounded-xl p-8 text-center sm:p-12">
-              <p class="text-muted-foreground text-sm tracking-wide uppercase">
-                {dateFormatter.format(pubDatetime)}
-              </p>
-              <h2 class="mt-3 text-2xl font-bold sm:text-3xl">{title}</h2>
-              <p class="text-muted-foreground mt-4 text-sm">{description}</p>
-              <a
-                href={href}
-                class="bg-muted mt-6 inline-block px-5 py-2.5 text-sm font-medium hover:opacity-80"
-              >
-                閱讀更多
-              </a>
+          <a href={href} class="relative block h-full w-full focus-visible:no-underline">
+            <div class="relative p-10 sm:p-24">
+              <div class="glass-panel mx-auto max-w-2xl rounded-xl p-8 text-center sm:p-12">
+                <p class="text-muted-foreground text-base tracking-wide uppercase">
+                  {dateFormatter.format(pubDatetime)}
+                </p>
+                <h2 class="mt-3 text-3xl font-bold sm:text-4xl">{title}</h2>
+                <p class="text-muted-foreground mt-4 text-base">{description}</p>
+              </div>
             </div>
-          </div>
+          </a>
         </div>
       ))}
 
