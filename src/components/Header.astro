@@ -71,7 +71,7 @@ const sections = categories.map(({ slug, navLabel }) => ({
       <a
         href={getRelativeLocaleUrl(locale, "about")}
         class:list={[
-          "nav-link shrink-0 rounded-md px-3 py-2 text-base font-medium sm:px-4",
+          "nav-link shrink-0 rounded-md px-3 py-2 text-lg font-medium sm:px-4",
           { "active-nav": isActive("/about") },
         ]}
       >
@@ -80,7 +80,7 @@ const sections = categories.map(({ slug, navLabel }) => ({
       <a
         href={getRelativeLocaleUrl(locale, "")}
         class:list={[
-          "nav-link shrink-0 rounded-md px-4 py-2 text-base font-medium",
+          "nav-link shrink-0 rounded-md px-4 py-2 text-lg font-medium",
           { "active-nav": currentPath === "/" },
         ]}
       >
@@ -108,7 +108,7 @@ const sections = categories.map(({ slug, navLabel }) => ({
               <a
                 href={getRelativeLocaleUrl(locale, path)}
                 class:list={[
-                  "nav-link block rounded-md px-4 py-2 text-center text-base font-medium",
+                  "nav-link block rounded-md px-4 py-2 text-center text-lg font-medium",
                   { "active-nav": isActive(`/${path}`) },
                 ]}
               >
@@ -122,11 +122,11 @@ const sections = categories.map(({ slug, navLabel }) => ({
             <li class="flex items-center justify-center ps-2">
               <LinkButton
                 href={getRelativeLocaleUrl(locale, "search")}
-                class:list={["focus-outline relative size-8"]}
+                class:list={["focus-outline relative size-10"]}
                 title="搜尋"
                 aria-label="搜尋"
               >
-                <IconSearch class="absolute top-1/2 left-1/2 size-5 -translate-x-1/2 -translate-y-1/2" />
+                <IconSearch class="absolute top-1/2 left-1/2 size-6 -translate-x-1/2 -translate-y-1/2" />
                 <span class="sr-only">搜尋</span>
               </LinkButton>
             </li>
@@ -141,13 +141,13 @@ const sections = categories.map(({ slug, navLabel }) => ({
         features.lightAndDarkMode && (
           <button
             id="theme-btn"
-            class="focus-outline hover:text-foreground relative size-6"
+            class="focus-outline hover:text-foreground relative size-8"
             title="切換深色/淺色模式"
             aria-label="auto"
             aria-live="polite"
           >
-            <IconMoon class="absolute top-[50%] left-[50%] size-6 translate-[-50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-            <IconSunHigh class="absolute top-[50%] left-[50%] size-6 translate-[-50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+            <IconMoon class="absolute top-[50%] left-[50%] size-8 translate-[-50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+            <IconSunHigh class="absolute top-[50%] left-[50%] size-8 translate-[-50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
           </button>
         )
       }

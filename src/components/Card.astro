@@ -29,8 +29,22 @@ const {
 } = Astro.props;
 ---
 
-<li class="glass-panel mb-6 flex flex-col gap-4 overflow-hidden rounded-xl p-6 last:mb-0 sm:relative sm:h-65">
-  {
+<li
+  class="
+    glass-panel
+    mb-6
+    last:mb-0
+    flex flex-col
+    gap-4
+    overflow-hidden
+    rounded-xl
+    border border-muted-foreground/20
+    p-6
+    sm:relative
+    sm:h-55
+  "
+>
+  {  
     coverImage ? (
       <div class="w-full flex-none sm:absolute sm:inset-y-0 sm:left-0 sm:flex sm:w-55 sm:items-center sm:justify-center">
         <Image
@@ -38,12 +52,12 @@ const {
           alt=""
           width={480}
           height={480}
-          class="photo-shadow aspect-video w-full rounded-xl object-cover sm:aspect-square sm:h-64 sm:w-60"
+          class="aspect-video w-full rounded-xl object-cover sm:aspect-square sm:h-64 sm:w-60"
         />
       </div>
     ) : (
       <div class="w-full flex-none sm:absolute sm:inset-y-0 sm:left-0 sm:flex sm:w-56 sm:items-center sm:justify-center">
-        <div class="media-placeholder photo-shadow aspect-video w-full rounded-xl sm:aspect-square sm:h-60 sm:w-60" />
+        <div class="media-placeholder aspect-video w-full rounded-xl sm:aspect-square sm:h-60 sm:w-60" />
       </div>
     )
   }
